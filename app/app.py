@@ -10,6 +10,7 @@ CLIENT_ID = os.getenv('CLIENT_ID')
 SECRET_ID = os.getenv('SECRET_ID')
 REDIRECT_URI = os.getenv('REDIRECT_URI')
 
+AUTH_URI = 'https://auth.truelayer-sandbox.com/'
 AUTHENTICATION_RESPONSE = {}
 
 
@@ -24,13 +25,14 @@ def authenticate():
         'providers': 'uk-cs-mock'
     })
 
-    authentication_link = f'https://auth.truelayer-sandbox.com/?{url_parameters}'
+    authentication_link = f'{AUTH_URI}?{url_parameters}'
 
     return f'<a href="{authentication_link}">Authenticate</a>'
 
 
 @app.route('/authenticate/callback', methods=['POST'])
 def authentication_handler():
+    global AUTHENTICATION_RESPONSE
     authentication_code = request.form['code']
 
     body = {
@@ -41,9 +43,8 @@ def authentication_handler():
         'redirect_uri': REDIRECT_URI,
     }
 
-    response = requests.post('https://auth.truelayer-sandbox.com/connect/token', data=body)
+    response = requests.post(f'{AUTH_URI}/connect/token', data=body)
 
-    global AUTHENTICATION_RESPONSE
     AUTHENTICATION_RESPONSE['response'] = response.json()
 
     return redirect(url_for('test'))
@@ -51,5 +52,4 @@ def authentication_handler():
 
 @app.route('/test', methods=['GET'])
 def test():
-    print(f"Access token from response: {AUTHENTICATION_RESPONSE['response']['access_token']}")
     return 'Hello, World'
