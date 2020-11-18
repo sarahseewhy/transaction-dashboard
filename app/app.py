@@ -47,9 +47,9 @@ def authentication_handler():
 
     AUTHENTICATION_RESPONSE['response'] = response.json()
 
-    return redirect(url_for('test'))
+    return redirect(url_for('display_transactions'))
 
 
-@app.route('/test', methods=['GET'])
-def test():
-    return 'Hello, World'
+@app.route('/display_transactions', methods=['GET'])
+def display_transactions():
+    return 'Transactions coming soon'
