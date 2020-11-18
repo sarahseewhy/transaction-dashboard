@@ -10,6 +10,8 @@ CLIENT_ID = os.getenv('CLIENT_ID')
 SECRET_ID = os.getenv('SECRET_ID')
 REDIRECT_URI = os.getenv('REDIRECT_URI')
 
+AUTHENTICATION_RESPONSE = {}
+
 
 @app.route('/authenticate', methods=['GET'])
 def authenticate():
@@ -41,9 +43,13 @@ def authentication_handler():
 
     response = requests.post('https://auth.truelayer-sandbox.com/connect/token', data=body)
 
+    global AUTHENTICATION_RESPONSE
+    AUTHENTICATION_RESPONSE['response'] = response.json()
+
     return redirect(url_for('test'))
 
 
 @app.route('/test', methods=['GET'])
 def test():
+    print(f"Access token from response: {AUTHENTICATION_RESPONSE['response']['access_token']}")
     return 'Hello, World'
