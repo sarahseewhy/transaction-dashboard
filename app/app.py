@@ -12,8 +12,9 @@ CLIENT_ID = os.getenv('CLIENT_ID')
 def authenticate():
     url_parameters = urllib.parse.urlencode({
         'response_type': 'code',
+        'response_mode': 'form_post',
         'client_id': CLIENT_ID,
-        'scope': 'info accounts balance card transactions direct_debits standing_orders offline_access',
+        'scope': 'accounts transactions',
         'redirect_uri': 'https://console.truelayer.com/redirect-page',
         'providers': 'uk-ob-all uk-oauth-all uk-cs-mock'
     })
