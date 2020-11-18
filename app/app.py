@@ -2,7 +2,7 @@ import os
 import urllib
 
 import requests
-from flask import Flask, request
+from flask import Flask, request, redirect, url_for
 
 app = Flask(__name__)
 
@@ -41,4 +41,9 @@ def authentication_handler():
 
     response = requests.post('https://auth.truelayer-sandbox.com/connect/token', data=body)
 
-    return f'Authentication successful'
+    return redirect(url_for('test'))
+
+
+@app.route('/test', methods=['GET'])
+def test():
+    return 'Hello, World'
