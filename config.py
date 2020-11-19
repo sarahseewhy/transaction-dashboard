@@ -1,0 +1,20 @@
+import os
+
+CONFIG = {}
+
+
+def load_environment(app):
+    """
+    Load environment vars into flask app attributes
+    """
+    global CONFIG
+    CONFIG = app.config
+    setup_local_environment()
+
+
+def setup_local_environment():
+    CONFIG['CLIENT_ID'] = os.getenv('CLIENT_ID')
+    CONFIG['REDIRECT_URI'] = os.getenv('REDIRECT_URI')
+    CONFIG['ENV'] = "development"
+    CONFIG['TESTING'] = True
+    CONFIG['SERVER_NAME'] = 'localhost:5000'
