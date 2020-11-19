@@ -57,9 +57,7 @@ def has_authentication_code():
 
     try:
         response = requests.post(f'{TRUELAYER_AUTH_URI}/connect/token', data=body)
-        AUTHENTICATION_RESPONSE = response.json()
+        AUTHENTICATION_RESPONSE['response'] = response.json()
         return True
     except urllib.error.HTTPError as exception:
         print(exception)
-
-    return False
