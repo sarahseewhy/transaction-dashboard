@@ -6,7 +6,7 @@ import config
 
 
 @pytest.mark.usefixtures("test_client")
-def test_authenticate(test_client):
+def test_authenticate_route_redirects_to_authentication_uri(test_client):
     client_id = config.CONFIG['CLIENT_ID']
     redirect_uri = config.CONFIG['REDIRECT_URI']
 
@@ -25,3 +25,14 @@ def test_authenticate(test_client):
         response = test_client.get('/authenticate')
         assert response.status_code == 302
         assert response.location == authentication_link
+
+
+@pytest.mark.usefixtures("test_client")
+def test_authenticate_handler_redirects_to_transaction_route(test_client):
+
+    display_transactions_route = 'http://localhost:5000/display_transactions'
+
+    with test_client:
+        response = test_client.post('/authenticate/callback')
+        assert response.status_code == 302
+        assert response.location == display_transactions_route

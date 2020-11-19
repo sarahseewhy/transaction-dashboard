@@ -26,6 +26,7 @@ def authenticate():
     })
 
     authentication_link = f'{TRUELAYER_AUTH_URI}?{url_parameters}'
+
     return redirect(authentication_link, 302)
 
 
