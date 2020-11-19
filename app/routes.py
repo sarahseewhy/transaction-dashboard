@@ -1,4 +1,5 @@
 import os
+import urllib
 
 from flask import Flask
 
@@ -14,7 +15,18 @@ AUTHENTICATION_RESPONSE = {}
 
 @app.route('/authenticate', methods=['GET'])
 def authenticate():
-    return None
+    url_parameters = urllib.parse.urlencode({
+        'response_type': 'code',
+        'response_mode': 'form_post',
+        'client_id': CLIENT_ID,
+        'scope': 'accounts transactions',
+        'redirect_uri': REDIRECT_URI,
+        'providers': 'uk-cs-mock'
+    })
+
+    authentication_link = f'{AUTH_URI}?{url_parameters}'
+
+    return f'<a href="{authentication_link}">Authenticate</a>'
 
 
 @app.route('/authenticate/callback', methods=['POST'])
