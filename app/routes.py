@@ -33,7 +33,18 @@ def authenticate():
 
 @app.route('/authenticate/callback', methods=['POST'])
 def authentication_handler():
+    if has_authentication_code():
+        return redirect(url_for('display_transactions'))
+
+
+@app.route('/display_transactions/', methods=['GET'])
+def display_transactions():
+    return 'Transactions coming soon'
+
+
+def has_authentication_code():
     global AUTHENTICATION_RESPONSE
+
     authentication_code = request.form['code']
 
     body = {
@@ -44,13 +55,11 @@ def authentication_handler():
         'redirect_uri': REDIRECT_URI,
     }
 
-    response = requests.post(f'{TRUELAYER_AUTH_URI}/connect/token', data=body)
+    try:
+        response = requests.post(f'{TRUELAYER_AUTH_URI}/connect/token', data=body)
+        AUTHENTICATION_RESPONSE = response.json()
+        return True
+    except urllib.error.HTTPError as exception:
+        print(exception)
 
-    AUTHENTICATION_RESPONSE['response'] = response.json()
-
-    return redirect(url_for('display_transactions'))
-
-
-@app.route('/display_transactions', methods=['GET'])
-def display_transactions():
-    return None
+    return False
