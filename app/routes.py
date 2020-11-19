@@ -1,7 +1,7 @@
 import os
-import urllib
 
 from flask import Flask
+from werkzeug.utils import redirect
 
 app = Flask(__name__)
 
@@ -15,18 +15,8 @@ AUTHENTICATION_RESPONSE = {}
 
 @app.route('/authenticate', methods=['GET'])
 def authenticate():
-    url_parameters = urllib.parse.urlencode({
-        'response_type': 'code',
-        'response_mode': 'form_post',
-        'client_id': CLIENT_ID,
-        'scope': 'accounts transactions',
-        'redirect_uri': REDIRECT_URI,
-        'providers': 'uk-cs-mock'
-    })
-
-    authentication_link = f'{AUTH_URI}?{url_parameters}'
-
-    return f'<a href="{authentication_link}">Authenticate</a>'
+    auth_link = f'https://auth.truelayer-sandbox.com/?response_type=code&client_id={CLIENT_ID}&scope=accounts%20transactionsredirect_uri={REDIRECT_URI}&providers=uk-cs-mock'
+    return redirect(auth_link, 302)
 
 
 @app.route('/authenticate/callback', methods=['POST'])
