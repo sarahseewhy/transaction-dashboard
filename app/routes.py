@@ -1,7 +1,8 @@
 import os
 import urllib
 
-from flask import Flask, url_for
+import requests
+from flask import Flask, url_for, request
 from werkzeug.utils import redirect
 
 app = Flask(__name__)
@@ -32,6 +33,21 @@ def authenticate():
 
 @app.route('/authenticate/callback', methods=['POST'])
 def authentication_handler():
+    global AUTHENTICATION_RESPONSE
+    authentication_code = request.form['code']
+
+    body = {
+        'client_id': CLIENT_ID,
+        'client_secret': SECRET_ID,
+        'code': authentication_code,
+        'grant_type': 'authorization_code',
+        'redirect_uri': REDIRECT_URI,
+    }
+
+    response = requests.post(f'{TRUELAYER_AUTH_URI}/connect/token', data=body)
+
+    AUTHENTICATION_RESPONSE['response'] = response.json()
+
     return redirect(url_for('display_transactions'))
 
 
