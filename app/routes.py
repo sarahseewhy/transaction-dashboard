@@ -1,7 +1,7 @@
 import os
 import urllib
 
-from flask import Flask
+from flask import Flask, url_for
 from werkzeug.utils import redirect
 
 app = Flask(__name__)
@@ -32,7 +32,7 @@ def authenticate():
 
 @app.route('/authenticate/callback', methods=['POST'])
 def authentication_handler():
-    return None
+    return redirect(url_for('display_transactions'))
 
 
 @app.route('/display_transactions', methods=['GET'])
