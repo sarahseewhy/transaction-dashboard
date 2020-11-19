@@ -1,1 +1,4 @@
+pytest
+werkzeug
 Flask == 1.1.*
+pytest-dotenv
