@@ -1,0 +1,12 @@
+# docker-compose version
+version: '3.8'
+
+services:
+  app:
+    build: .
+    volumes:
+      - .:/usr/src
+    ports:
+      - 5000:5000
+    environment:
+      FLASK_ENV: development
