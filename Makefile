@@ -1,5 +1,5 @@
 install:
-	@pipenv install --dev
+	@pipenv install
 
 test:
 	python3 -m pytest
