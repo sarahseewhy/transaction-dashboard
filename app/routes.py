@@ -9,9 +9,11 @@ app = Flask(__name__)
 
 CLIENT_ID = os.getenv('CLIENT_ID')
 SECRET_ID = os.getenv('SECRET_ID')
-REDIRECT_URI = os.getenv('REDIRECT_URI')
+REDIRECT_URL = os.getenv('REDIRECT_URL')
 
-TRUELAYER_AUTH_URI = 'https://auth.truelayer-sandbox.com/'
+AUTH_API = 'https://auth.truelayer-sandbox.com/'
+DATA_API = 'https://api.truelayer-sandbox.com/data/v1'
+
 AUTHENTICATION_RESPONSE = {}
 
 
@@ -22,11 +24,11 @@ def authenticate():
         'response_mode': 'form_post',
         'client_id': CLIENT_ID,
         'scope': 'accounts transactions',
-        'redirect_uri': REDIRECT_URI,
+        'redirect_uri': REDIRECT_URL,
         'providers': 'uk-cs-mock'
     })
 
-    authentication_link = f'{TRUELAYER_AUTH_URI}?{url_parameters}'
+    authentication_link = f'{AUTH_API}?{url_parameters}'
 
     return redirect(authentication_link, 302)
 
@@ -44,7 +46,7 @@ def display_transactions():
 
     request_header = {'Authorization': f'Bearer {access_token}'}
 
-    response = requests.get('https://api.truelayer-sandbox.com/data/v1/accounts', headers=request_header)
+    response = requests.get(f'{DATA_API}/accounts', headers=request_header)
 
     accounts = response.json()['results']
 
@@ -63,7 +65,7 @@ def retrieve_transactions(account_id):
 
     request_header = {'Authorization': f'Bearer {access_token}'}
 
-    response = requests.get(f'https://api.truelayer-sandbox.com/data/v1/accounts/{account_id}/transactions', headers=request_header)
+    response = requests.get(f'{DATA_API}/accounts/{account_id}/transactions', headers=request_header)
 
     transactions = response.json()['results']
 
@@ -80,11 +82,11 @@ def has_authentication_code():
         'client_secret': SECRET_ID,
         'code': authentication_code,
         'grant_type': 'authorization_code',
-        'redirect_uri': REDIRECT_URI,
+        'redirect_uri': REDIRECT_URL,
     }
 
     try:
-        response = requests.post(f'{TRUELAYER_AUTH_URI}/connect/token', data=body)
+        response = requests.post(f'{AUTH_API}/connect/token', data=body)
         AUTHENTICATION_RESPONSE['response'] = response.json()
         return True
     except urllib.error.HTTPError as exception:
