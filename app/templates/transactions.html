@@ -1,0 +1,13 @@
+<html>
+    <head>
+        <title>Transaction Dashboard</title>
+    </head>
+    <body>
+        <h1>Transaction Data</h1>
+        <ol>
+            {% for transaction in transactions %}
+                <li>{{transaction}}</li>
+            {% endfor %}
+        </ol>
+    </body>
+</html>
