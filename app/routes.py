@@ -2,7 +2,7 @@ import os
 import urllib
 
 import requests
-from flask import Flask, url_for, request
+from flask import Flask, url_for, request, render_template
 from werkzeug.utils import redirect
 
 app = Flask(__name__)
@@ -37,9 +37,37 @@ def authentication_handler():
         return redirect(url_for('display_transactions'))
 
 
-@app.route('/display_transactions/', methods=['GET'])
+@app.route('/display_transactions', methods=['GET'])
 def display_transactions():
-    return 'Transactions coming soon'
+
+    access_token = AUTHENTICATION_RESPONSE['response']['access_token']
+
+    request_header = {'Authorization': f'Bearer {access_token}'}
+
+    response = requests.get('https://api.truelayer-sandbox.com/data/v1/accounts', headers=request_header)
+
+    accounts = response.json()['results']
+
+    transactions = {}
+
+    for account in accounts:
+        account_id = account['account_id']
+        if account['account_type'] == 'TRANSACTION':
+            transactions = retrieve_transactions(account_id)
+
+    return render_template('transactions.html', transactions=transactions)
+
+
+def retrieve_transactions(account_id):
+    access_token = AUTHENTICATION_RESPONSE['response']['access_token']
+
+    request_header = {'Authorization': f'Bearer {access_token}'}
+
+    response = requests.get(f'https://api.truelayer-sandbox.com/data/v1/accounts/{account_id}/transactions', headers=request_header)
+
+    transactions = response.json()['results']
+
+    return transactions
 
 
 def has_authentication_code():
