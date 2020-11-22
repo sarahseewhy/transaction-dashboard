@@ -35,9 +35,9 @@ You can decide whether to set the `FLASK_ENV` value to be "development" or "prod
 
 ### Installing dependencies
 
-The project contains a Makefile which is used to install, run, and test the app.
+The project contains a Makefile which is used to install, run, and test the app. All commands are run from the root project directory.
 
-First install the required packages from the root project directory:
+First install the required packages:
 
 ```bash
 $ make install
