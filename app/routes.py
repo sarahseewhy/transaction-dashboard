@@ -35,7 +35,7 @@ def authenticate():
 
 @app.route('/authenticate/callback', methods=['POST'])
 def authentication_handler():
-    retrieve_access_token()
+    set_access_token()
     return redirect(url_for('display_transactions'))
 
 
@@ -74,8 +74,6 @@ def retrieve_transactions(account_id):
 
 
 def retrieve_access_token():
-    global AUTHENTICATION_RESPONSE
-
     authentication_code = request.form['code']
 
     body = {
@@ -88,4 +86,10 @@ def retrieve_access_token():
 
     response = requests.post(f'{AUTH_API}/connect/token', data=body)
 
+    return response
+
+
+def set_access_token():
+    global AUTHENTICATION_RESPONSE
+    response = retrieve_access_token()
     AUTHENTICATION_RESPONSE['response'] = response.json()
