@@ -14,9 +14,9 @@ $ git clone https://github.com/sarahseewhy/transaction-dashboard.git
 
 ### Requirements
 
-You must have `python3`, `pip3`, and `pipenv` installed in order to install, run, and test the application.
+You must have `python3`, `pip3`, and `pipenv` installed in order to install, run, and test the app.
 
-The application uses a `.env` file to set required environment variables.
+The app uses a `.env` file to set required environment variables.
 
 Create a `.env` file in the root project directory and add the following configuration:
 
