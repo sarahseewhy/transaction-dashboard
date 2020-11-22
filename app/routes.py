@@ -39,7 +39,7 @@ def authentication_handler():
     return redirect(url_for('display_transactions'))
 
 
-@app.route('/display_transactions', methods=['GET'])
+@app.route('/display/transactions', methods=['GET'])
 def display_transactions():
     accounts = retrieve_data_response_for('accounts').json()['results']
 

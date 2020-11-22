@@ -30,7 +30,7 @@ def test_authenticate_route_redirects_to_authentication_uri(test_client):
 @pytest.mark.skip(reason="Method also calls the TrueLayer API and I can't figure out how to mock it.")
 @pytest.mark.usefixtures("test_client")
 def test_authenticate_handler_redirects_to_transaction_route(test_client):
-    display_transactions_route = 'http://localhost:5000/display_transactions'
+    display_transactions_route = 'http://localhost:5000/display/transactions'
 
     with test_client:
         response = test_client.post('/authenticate/callback')
