@@ -9,9 +9,6 @@ Download the project by git cloning:
 ```bash
 $ git clone https://github.com/sarahseewhy/transaction-dashboard.git
 ```
-The app dependency installation is managed by the Makefile.
-
-Run `make install` from the root project directory to install the required Python dependencies.
 
 ## Usage
 
