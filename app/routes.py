@@ -41,11 +41,7 @@ def authentication_handler():
 
 @app.route('/display_transactions', methods=['GET'])
 def display_transactions():
-    access_token = AUTHENTICATION_RESPONSE['response']['access_token']
-
-    request_header = {'Authorization': f'Bearer {access_token}'}
-
-    response = requests.get(f'{DATA_API}/accounts', headers=request_header)
+    response = retrieve_response_for('accounts')
 
     accounts = response.json()['results']
 
@@ -59,12 +55,18 @@ def display_transactions():
     return render_template('transactions.html', transactions=transactions)
 
 
-def retrieve_transactions(account_id):
+def retrieve_response_for(url):
     access_token = AUTHENTICATION_RESPONSE['response']['access_token']
 
     request_header = {'Authorization': f'Bearer {access_token}'}
 
-    response = requests.get(f'{DATA_API}/accounts/{account_id}/transactions', headers=request_header)
+    response = requests.get(f'{DATA_API}/{url}', headers=request_header)
+
+    return response
+
+
+def retrieve_transactions(account_id):
+    response = retrieve_response_for(f'accounts/{account_id}/transactions')
 
     transactions = response.json()['results']
 
