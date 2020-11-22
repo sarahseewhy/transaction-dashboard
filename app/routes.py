@@ -35,13 +35,12 @@ def authenticate():
 
 @app.route('/authenticate/callback', methods=['POST'])
 def authentication_handler():
-    if has_authentication_code():
-        return redirect(url_for('display_transactions'))
+    retrieve_access_token()
+    return redirect(url_for('display_transactions'))
 
 
 @app.route('/display_transactions', methods=['GET'])
 def display_transactions():
-
     access_token = AUTHENTICATION_RESPONSE['response']['access_token']
 
     request_header = {'Authorization': f'Bearer {access_token}'}
@@ -72,7 +71,7 @@ def retrieve_transactions(account_id):
     return transactions
 
 
-def has_authentication_code():
+def retrieve_access_token():
     global AUTHENTICATION_RESPONSE
 
     authentication_code = request.form['code']
@@ -85,9 +84,6 @@ def has_authentication_code():
         'redirect_uri': REDIRECT_URL,
     }
 
-    try:
-        response = requests.post(f'{AUTH_API}/connect/token', data=body)
-        AUTHENTICATION_RESPONSE['response'] = response.json()
-        return True
-    except urllib.error.HTTPError as exception:
-        print(exception)
+    response = requests.post(f'{AUTH_API}/connect/token', data=body)
+
+    AUTHENTICATION_RESPONSE['response'] = response.json()
