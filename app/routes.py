@@ -41,9 +41,7 @@ def authentication_handler():
 
 @app.route('/display_transactions', methods=['GET'])
 def display_transactions():
-    response = retrieve_response_for('accounts')
-
-    accounts = response.json()['results']
+    accounts = retrieve_data_response_for('accounts').json()['results']
 
     transactions = {}
 
@@ -55,25 +53,19 @@ def display_transactions():
     return render_template('transactions.html', transactions=transactions)
 
 
-def retrieve_response_for(url):
+def retrieve_data_response_for(url):
     access_token = AUTHENTICATION_RESPONSE['response']['access_token']
 
     request_header = {'Authorization': f'Bearer {access_token}'}
 
-    response = requests.get(f'{DATA_API}/{url}', headers=request_header)
-
-    return response
+    return requests.get(f'{DATA_API}/{url}', headers=request_header)
 
 
 def retrieve_transactions(account_id):
-    response = retrieve_response_for(f'accounts/{account_id}/transactions')
-
-    transactions = response.json()['results']
-
-    return transactions
+    return retrieve_data_response_for(f'accounts/{account_id}/transactions').json()['results']
 
 
-def retrieve_access_token():
+def retrieve_access_token_from_auth_api():
     authentication_code = request.form['code']
 
     body = {
@@ -84,12 +76,12 @@ def retrieve_access_token():
         'redirect_uri': REDIRECT_URL,
     }
 
-    response = requests.post(f'{AUTH_API}/connect/token', data=body)
-
-    return response
+    return requests.post(f'{AUTH_API}/connect/token', data=body)
 
 
 def set_access_token():
     global AUTHENTICATION_RESPONSE
-    response = retrieve_access_token()
+
+    response = retrieve_access_token_from_auth_api()
+
     AUTHENTICATION_RESPONSE['response'] = response.json()
