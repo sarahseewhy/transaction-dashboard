@@ -29,7 +29,7 @@ FLASK_ENV= development | production
 
 The `CLIENT_ID` and `SECRET_ID` values are found in the TrueLayer console. Please use the [TrueLayer documentation](https://docs.truelayer.com/#overview) to set this up.
 
-`REDIRECT_URL` value will be a hostname (e.g., `localhost`) plus the redirect route configured in `routes.py` (in this case `authenticate/callback`). The value will need to also be set in the TrueLayer console.
+`REDIRECT_URL` value will be a hostname (e.g., `localhost`) and port (e.g., `5000`), plus the redirect route configured in `routes.py` (in this case `authenticate/callback`). The value will need to also be set in the TrueLayer console.
 
 You can decide whether to set the `FLASK_ENV` value to be "development" or "production" based on your needs.
 
