@@ -4,7 +4,7 @@ Python application to display fake transactions in basic HTML from a mock bank u
 
 ## Installation
 
-Download the project by git cloning:
+Download the project using git clone:
 
 ```bash
 $ git clone https://github.com/sarahseewhy/transaction-dashboard.git
@@ -14,7 +14,7 @@ $ git clone https://github.com/sarahseewhy/transaction-dashboard.git
 
 ### Requirements
 
-You must have `python3`, `pip3`, and `pipenv` installed in order to install, run, and test the app.
+You must have `pyenv`, `python3`, `pip3`, and `pipenv` installed in order to install, run, and test the app. If you use a mac and don't have Python configured, [this is a helpful guide](https://opensource.com/article/19/5/python-3-default-mac).
 
 The app uses a `.env` file to set required environment variables.
 
@@ -24,12 +24,12 @@ Create a `.env` file in the root project directory and add the following configu
 CLIENT_ID=********
 SECRET_ID=********
 REDIRECT_URL=********
-FLASK_ENV= development | production 
+FLASK_ENV=development | production 
 ```
 
 The `CLIENT_ID` and `SECRET_ID` values are found in the TrueLayer console. Please use the [TrueLayer documentation](https://docs.truelayer.com/#overview) to set this up.
 
-`REDIRECT_URL` value will be a hostname (e.g., `localhost`) and port (e.g., `5000`), plus the redirect route configured in `routes.py` (in this case `authenticate/callback`). The value will need to also be set in the TrueLayer console.
+`REDIRECT_URL` value will be a hostname (e.g., `localhost`) and port (e.g., `5000`), plus the redirect route configured in `routes.py` (for this project that would be `authenticate/callback`). The value will also need to be set in the TrueLayer console.
 
 You can decide whether to set the `FLASK_ENV` value to be "development" or "production" based on your needs.
 
@@ -43,14 +43,19 @@ First install the required packages:
 $ make install
 ```
 
-#### Running and testing
+#### Running
 
-Run the app using the `run` Make command
+Run the app using the `run` Make command:
 
 ```bash
 $ make run
 ```
 
+**Then navigate to `http://127.0.0.1:5000/authenticate` in Chrome or Firefox and give it a whirl!**
+
+Note: Safari is not supported.
+
+#### Testing
 The Makefile is also responsible for running tests:
 
 ```bash
@@ -59,11 +64,11 @@ $ make test
 
 ## Roadmap
 
+There were a few parts of this project I wanted to get to or that were particularly perplexing and I've recorded them here as reflections. 
+
 ### Additional functionality
 
-The app should display an aggregated set of all the transactions.
-
-I did not get to this functionality yet, maybe next time!
+The app should display an aggregated set of all the transactions, maybe next time!
 
 ### Testing
 
@@ -87,7 +92,7 @@ The one block I added I ultimately removed because without tests I didn't have t
 
 ### Caching and asynchronous API calls
 
-I would've liked to implement async API calls to the TrueLayer API so it wouldn't be necessary to ask for the transaction data with every request.
+I would've liked to implement async API calls to the TrueLayer API so the app wouldn't query the API for transaction data with every request.
 
 Caching or saving data in a sensible manner would've also been a nice to have.
 
@@ -106,3 +111,7 @@ I've left the Dockerfile and the docker-compose.yml in the project for others to
 The Python Flask app I worked on previously was deployed on AWS Lambda and I wanted to go in this direction.
 
 It would've been fun to deploy the app to a Lambda but this was out of scope of the task. 
+
+### Styling
+
+Please forgive the simple HTML and default Times New Roman. It's a bit of an eye-sore but styling was out of scope.
