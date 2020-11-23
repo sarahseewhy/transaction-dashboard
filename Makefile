@@ -2,7 +2,7 @@ install:
 	@pipenv install
 
 test:
-	python3 -m pytest
+	pipenv run pytest
 
 run:
 	@FLASK_APP=app/routes.py pipenv run flask run
