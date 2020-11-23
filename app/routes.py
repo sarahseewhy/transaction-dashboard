@@ -36,7 +36,7 @@ def authenticate():
 @app.route('/authenticate/callback', methods=['POST'])
 def authentication_handler():
     set_access_token()
-    return redirect(url_for('display/transactions'))
+    return redirect(url_for('display_transactions'))
 
 
 @app.route('/display/transactions', methods=['GET'])
