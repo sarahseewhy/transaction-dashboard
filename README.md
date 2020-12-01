@@ -106,7 +106,7 @@ I suspect the root cause is host configuration between the container, the app, a
 
 I've left the Dockerfile and the docker-compose.yml in the project for others to get a sense of the direction I took.
 
-**Update**
+*Update*
 
 I figured this out. I needed to install `python-dotenv` in the Dockerfile to enable Flask to read the values in `.env`. 
 
