@@ -11,6 +11,8 @@ COPY Pipfile Pipfile.lock ./
 
 RUN pip3 install pipenv && pipenv install --system --deploy
 
+RUN pip3 install python-dotenv
+
 EXPOSE 5000
 
 COPY . .
