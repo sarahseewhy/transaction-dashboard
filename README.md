@@ -104,6 +104,8 @@ I experimented with using `session` for saving the transactions in memory but th
 
 If I still didn't want to use a database, I'd try dumping the data in a json file and loading it to display the transactions. I'd have to create a flag to establish whether to load the data from a file or to make an API call. `session` seems like the most obvious option, but it's worth researching others.
 
+If I went down the database route I'd have to do some more research to figure out which tool is best for the job. I read about [ACID](https://en.wikipedia.org/wiki/ACID) and best practices for financial transaction databases, but I think I need to do more research.
+
 Regarding asynchronous calls, I think I confused two concepts: saving the data and error handling. My brain wires got crossed.
 
 Using TrueLayer's `async=true` flag would be useful for error handling, though we're reaching the limits of my web app knowledge.
