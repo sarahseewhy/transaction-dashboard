@@ -76,7 +76,15 @@ The app needs needs unit tests, integration tests (to the TrueLayer API), and Se
 
 I began the TDD process but got stuck trying to stub and mock the TrueLayer API requests. I timeboxed the task but reached the limit of my Python testing knowledge and didn't want to exceed the timebox.
 
-**Update**:   
+**Update**: I read a bit more into testing with Python.
+
+I'd go back and experiment with `pytest-mock`. I didn't give it enough of a go.
+
+In the previous Python app I worked on I was mocking and stubbing AWS calls so used `botocore`. I also briefly tried `monkey-patch` but it was difficult to read and readability is really important when it comes to tests.
+
+I'm more comfortable TDDing in Java which says to me I need to practice more Python!
+
+It'd be neat to have a Python mocking library specifically for the TrueLayer API.
 
 ### Logging
 
