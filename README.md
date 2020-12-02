@@ -96,9 +96,7 @@ I would've liked to implement async API calls to the TrueLayer API so the app wo
 
 Caching or saving data in a sensible manner would've also been a nice to have.
 
-### Deployment
-
-#### Docker
+### Docker
 
 I initially added a Dockerfile and configured `docker-compose`. I successfully ran the app using Docker on Friday but when I returned on Sunday night to do some refactoring I got a `400 Bad Request` response from TrueLayer when I hit the `/authenticate` route.
 
@@ -106,11 +104,9 @@ I suspect the root cause is host configuration between the container, the app, a
 
 I've left the Dockerfile and the docker-compose.yml in the project for others to get a sense of the direction I took.
 
-**Update**
+**Update**: I figured this out. I needed to install `python-dotenv` in the Dockerfile to enable Flask to read the values in `.env`. 
 
-I figured this out. I needed to install `python-dotenv` in the Dockerfile to enable Flask to read the values in `.env`. 
-
-#### Terraform
+### Terraform
 
 The Python Flask app I worked on previously was deployed on AWS Lambda and I wanted to go in this direction.
 
