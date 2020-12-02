@@ -96,6 +96,18 @@ I would've liked to implement async API calls to the TrueLayer API so the app wo
 
 Caching or saving data in a sensible manner would've also been a nice to have.
 
+**Update**: I did a bit of research on saving data.
+
+I'd introduce Flask's built in `session` functionality to save the authentication access code instead of the `global` variable.
+
+I experimented with using `session` for saving the transactions in memory but the "cookie is too large" (not a problem with real cookies 🍪). A `session` can only store 4KB and the transaction data was 19KB. 
+
+If I still didn't want to use a database, I'd try dumping the data in a json file and loading it to display the transactions. I'd have to create a flag to establish whether to load the data from a file or to make an API call. `session` seems like the most obvious option, but it's worth researching others.
+
+Regarding asynchronous calls, I think I confused two concepts: saving the data and error handling. My brain wires got crossed.
+
+Using TrueLayer's `async=true` flag would be useful for error handling, though we're reaching the limits of my web app knowledge.
+
 ### Docker
 
 I initially added a Dockerfile and configured `docker-compose`. I successfully ran the app using Docker on Friday but when I returned on Sunday night to do some refactoring I got a `400 Bad Request` response from TrueLayer when I hit the `/authenticate` route.
