@@ -43,7 +43,7 @@ First install the required packages:
 $ make install
 ```
 
-#### Running
+### Running
 
 Run the app using the `run` Make command:
 
@@ -55,7 +55,7 @@ $ make run
 
 Note: Safari is not supported.
 
-#### Testing
+### Testing
 The Makefile is also responsible for running tests:
 
 ```bash
@@ -106,7 +106,7 @@ I suspect the root cause is host configuration between the container, the app, a
 
 I've left the Dockerfile and the docker-compose.yml in the project for others to get a sense of the direction I took.
 
-*Update*
+**Update**
 
 I figured this out. I needed to install `python-dotenv` in the Dockerfile to enable Flask to read the values in `.env`. 
 
