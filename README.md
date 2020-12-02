@@ -112,7 +112,7 @@ I'd introduce Flask's built in `session` functionality to save the authenticatio
 
 I experimented with using `session` for saving the transactions in memory but the "cookie is too large" (not a problem with real cookies 🍪). A `session` can only store 4KB and the transaction data was 19KB. 
 
-If I still didn't want to use a database, I'd try dumping the data in a json file and loading it to display the transactions. I'd have to create a flag to establish whether to load the data from a file or to make an API call. `session` seems like the most obvious option, but it's worth researching others.
+If I still didn't want to use a database, I'd try dumping the data in a json file and loading it to display the transactions. I'd have to create a flag to establish whether to load the data from a file or to make an API call. Using `session` could be one option (I need to think this through though), checking if the file exists or if it has contents is another.
 
 If I went down the database route I'd have to do some more research to figure out which tool is best for the job. I read about [ACID](https://en.wikipedia.org/wiki/ACID) and best practices for financial transaction databases, but I need to do more research.
 
@@ -135,6 +135,20 @@ I've left the Dockerfile and the docker-compose.yml in the project for others to
 The Python Flask app I worked on previously was deployed on AWS Lambda and I wanted to go in this direction.
 
 It would've been fun to deploy the app to a Lambda but this was out of scope of the task. 
+
+**Update**: If I'd gone down this route I would've started with something very simple: 
+
+- A Lambda serving the Python app
+- Cloudfront for any static content (not needed at this point but worth mentioning)
+- API Gateway to allow access from the interwebs
+- Basic VPC and networking configuration
+- Route53 to give the app a sensible domain
+
+We'd run into some interesting decisions when it comes to saving data because Lambdas are meant to be stateless. 
+
+It's possible to do in-app caching, saving _some_ data to `/tmp` on the Lambda. Perhaps that's a first step.
+
+Other possibilities which I read about but have not tried were: ElastiCache or EC2(Redis/Memcached). [This was a helpful read](https://blog.thundra.io/caching-with-aws-serverless-applications).
 
 ### Styling
 
