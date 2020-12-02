@@ -140,7 +140,7 @@ It would've been fun to deploy the app to a Lambda but this was out of scope of 
 
 - A Lambda serving the Python app
 - Cloudfront for any static content (not needed at this point but worth mentioning)
-- API Gateway to allow access from the interwebs
+- API Gateway to manage external access (again, perhaps not needed right now, but good practice)
 - Basic VPC and networking configuration
 - Route53 to give the app a sensible domain
 
