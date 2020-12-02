@@ -138,11 +138,11 @@ It would've been fun to deploy the app to a Lambda but this was out of scope of 
 
 **Update**: If I'd gone down this route I would've started with something very simple: 
 
-- A Lambda serving the Python app
-- Cloudfront for any static content (not needed at this point but worth mentioning)
-- API Gateway to manage external access (again, perhaps not needed right now, but good practice)
-- Basic VPC and networking configuration
-- Route53 to give the app a sensible domain
+- A Lambda serving the Python app.
+- Cloudfront for any static content (not needed at this point but worth mentioning).
+- API Gateway to manage external access (again, perhaps not needed right now, but good practice).
+- Basic VPC and networking configuration.
+- Route53 to give the app a sensible domain.
 
 We'd run into some interesting decisions when it comes to saving data because Lambdas are meant to be stateless. 
 
